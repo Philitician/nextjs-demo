@@ -10,6 +10,7 @@
     "push:mysql": "drizzle-kit push:mysql"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.21.13",
     "@formkit/auto-animate": "^0.7.0",
     "@hookform/resolvers": "^3.1.1",
     "@planetscale/database": "^1.7.0",

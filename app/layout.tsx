@@ -1,6 +1,13 @@
 import Link from "next/link";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,16 +22,37 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} bg-pink-100`}>
-        <div className="flex flex-col gap-2">
-          <div className="flex items-center p-4 gap-4">
-            <Link href="/products">Products</Link>
-            <Link href="/examples">Examples</Link>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className={`${inter.className} bg-pink-100`}>
+          <Header />
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center p-4 gap-4">
+              <Link href="/products">Products</Link>
+              <Link href="/examples">Examples</Link>
+            </div>
+            {children}
           </div>
-          {children}
-        </div>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
+  );
+}
+
+function Header() {
+  return (
+    <header
+      style={{ display: "flex", justifyContent: "space-between", padding: 20 }}
+    >
+      <h1>My App</h1>
+      <SignedIn>
+        {/* Mount the UserButton component */}
+        <UserButton afterSignOutUrl="/" />
+      </SignedIn>
+      <SignedOut>
+        {/* Signed out users get sign in button */}
+        <SignInButton />
+      </SignedOut>
+    </header>
   );
 }
